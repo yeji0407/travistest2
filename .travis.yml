@@ -1,0 +1,26 @@
+language: cpp
+sudo: required
+dist: bionic
+compiler:
+- gcc
+os:
+- linux
+
+script:
+- touch a.txt
+- touch b.txt
+
+before_deploy:
+    - git config --local user.name "Yeji Hong"
+    - git config --local user.email "yejisoft@gmail.com"
+    - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+    - git tag ${TRAVIS_TAG}
+deploy:
+    provider: releases
+    api_key: 
+        secure: "K4DdCt1mL3Stmk8sSpB6rygCcTFmMm5D0OdgU6vvRR/MgFX6tTdNoWUx674DvCZr75UUo34uem9Nj5LDk0d/J3YPE6JrY8wJosz3eGUQThNsGY2W3f1xBY2MhHnD1MbIEllQPAcgULIyiW18GLeN1d6xkiI20773AAr8QsMaeWtWJx2BoUMHWdrAPkkrw5JoIb+wTdQIByGul1gyZfQvr7N1TwTDpQ/xGCQGc55pPMshWhA8sJ5pZfryurChBmK7LJ9cKx6ojApMwSGltP8EownW42US5z99fGjzc4d+Tzfh1IV9QXbBL7Hh8AejtYyUc3o4eoTtOSq4KUDZ8ir9/ZM+NPy/KBW+iK1le92zAYhzTRis0ONVXJSwao2aMbYOYLEuTv3iYeflXr3EHvyj7d7sUoY4xXePDLV7IMtk4RLURxxkjijQYq6nkV7ZdavwjZWzu/rjz60SHIelQ6oLFQuP3T+PjwLhh6ZxbGo/yuTsgq7UoVECiBPwMSTk7DMIy22hb5PM17kjBBQGG8x+cYMHhzINZ+9oCRN9CziDb8rFg8IOjpdVMIVAqTRpiEwTidrGChtQQaY+wCTxD11/Kf+4TbnqASiJY8YtiLjptLTcVGwMQHPS5y5qmxcTaERNbAJDLrxVnhyPa/k2y+haObWq4vITBmX2rH72/L+6yjs="
+    file: 
+        - a.txt 
+        - b.txt
+    skip_cleanup: true
+    draft: true
